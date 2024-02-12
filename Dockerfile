@@ -1,20 +1,20 @@
-#syntax:docker/dockerfile:1
-
-FROM node:20.11.0-alpine
-ENV NODE_ENV=production
+FROM node:16.14.2-alpine AS base
 
 WORKDIR /app
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY ["package.json", "yarn.lock*", "./"]
 
-RUN npm install --production 
-# --production is used to install the prod deps
+# Development stage
+FROM base AS dev
 
+RUN npm install
 COPY . .
+CMD ["yarn", "start:dev"]
 
+# Production stage
+FROM base AS prod
 
-RUN npm install global @nestjs/cli
-
+RUN npm install --production
+COPY . .
 RUN npm run build
-
-CMD ["npm", "run", "start:prod"]
+CMD ["yarn", "start:prod"]
