@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ClsModule } from 'nestjs-cls';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { UserModule } from 'src/modules/user/user.module';
+import { DatabaseModule } from './modules/database/database.module';
 
 @Module({
   // Module adds some metadata to the class
@@ -26,6 +27,7 @@ import { UserModule } from 'src/modules/user/user.module';
     }),
     AuthModule,
     UserModule,
+    DatabaseModule,
   ],
 })
 export class AppModule {}
