@@ -6,15 +6,14 @@ COPY ["package.json", "yarn.lock*", "./"]
 
 # Development stage
 FROM base AS dev
-
-RUN npm install
+ENV NODE_ENV=development
+RUN yarn install
 COPY . .
 CMD ["yarn", "start:dev"]
-
 # Production stage
 FROM base AS prod
-
-RUN npm install --production
+ENV NODE_ENV=production
+RUN yarn install --production
 COPY . .
-RUN npm run build
+RUN yarn build
 CMD ["yarn", "start:prod"]
